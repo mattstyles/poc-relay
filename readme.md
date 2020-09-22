@@ -7,9 +7,9 @@
 
 # getting-started-github
 
-Basic description
+Create a github token in order to access the github api (it’ll need repo access) and add it to `.env.example`. Rename to `.env`.
 
 ```sh
-npm install
-npm start
+yarn
+yarn start
 ```
