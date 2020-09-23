@@ -11,7 +11,8 @@
     "build": "NODE_PATH=src NODE_ENV=production parcel build src/index.html",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
-    "start": "NODE_PATH=src DEBUG=true parcel src/index.html"
+    "relay": "yarn run relay-compiler --schema schema.graphql --src ./src/ --watchman false $@",
+    "start": "NODE_PATH=src DEBUG=true yarn run relay && parcel src/index.html"
   },
   "browserslist": [
     "last 1 Chrome version"
@@ -22,6 +23,7 @@
       "@babel/preset-react"
     ],
     "plugins": [
+      "babel-plugin-macros",
       "styled-components",
       "transform-react-require",
       [
@@ -64,24 +66,30 @@
     "@babel/preset-react": "^7.10.1",
     "babel-eslint": "^10.1.0",
     "babel-plugin-lodash": "^3.3.4",
+    "babel-plugin-macros": "^2.8.0",
     "babel-plugin-module-resolver": "^4.0.0",
+    "babel-plugin-relay": "^10.0.1",
     "babel-plugin-styled-components": "^1.10.7",
     "babel-plugin-transform-react-require": "^1.0.1",
     "create-raid-app": "^6.0.0",
     "gh-pages": "^2.2.0",
+    "graphql": "^15.3.0",
     "mkdirp": "^1.0.4",
     "parcel-bundler": "^1.12.4",
+    "relay-compiler": "^10.0.1",
     "rimraf": "^3.0.2",
     "standard": "^14.3.3"
   },
   "dependencies": {
-    "@raid/kit": "^0.19.0-alpha.6",
+    "@raid/kit": "^0.19.0-alpha.7",
     "@styled-system/css": "5.1.5",
     "@styled-system/theme-get": "5.1.2",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-is": "^16.13.1",
+    "react-relay": "^0.0.0-experimental-183bdd28",
+    "relay-runtime": "^10.0.1",
     "styled-components": "^5.1.0",
     "styled-system": "5.1.5"
   }
