@@ -9,9 +9,12 @@
 
 Create a github token in order to access the github api (it’ll need repo access) and add it to `.env.example`. Rename to `.env`.
 
-The start script also requires [watchman](https://facebook.github.io/watchman/docs/install.html) to be installed.
+The relay script also requires [watchman](https://facebook.github.io/watchman/docs/install.html) to be installed.
 
 ```sh
 yarn
 yarn start
+yarn run relay
 ```
+
+Start will begin a server ready to serve your project to browsers. The relay script will start watching your queries and converting them into something that relay can use.

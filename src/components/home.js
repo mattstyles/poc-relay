@@ -1,19 +1,20 @@
 
-import React, { useEffect, useState, Suspense } from 'react'
+import React, { Suspense } from 'react'
 import {
-  View, Placeholder, Box, Stack, Flex, Spacer,
-  Text, Pre, List, ListItem, Badge,
+  View, Box, Flex, Spacer,
+  Text, Badge,
   Image
 } from '@raid/kit'
 import graphql from 'babel-plugin-relay/macro'
 import {
   loadQuery,
   usePreloadedQuery,
-  useFragment
+  useFragment,
+  useLazyLoadQuery
 } from 'react-relay/hooks'
 
 import { env } from '../env'
-// import { fetchGraphQL } from 'utils/fetch'
+import { Glimmer } from 'components/glimmer'
 
 const ownerFragment = graphql`
   fragment homeOwner on RepositoryOwner {
@@ -36,6 +37,11 @@ const query = graphql`
   }
 `
 
+const preloadedQuery = loadQuery.loadQuery(env, query, {
+  owner: 'facebook',
+  name: 'relay'
+})
+
 const RepoOwner = ({ owner }) => {
   const data = useFragment(ownerFragment, owner)
   console.log('owner', data)
@@ -48,15 +54,18 @@ const RepoOwner = ({ owner }) => {
   )
 }
 
-const preloadedQuery = loadQuery.loadQuery(env, query, {
-  owner: 'facebook',
-  name: 'relay'
-})
-
-const Glimmer = () => {
+const DisplayRepo = ({
+  owner,
+  name
+}) => {
+  const data = useLazyLoadQuery(query, {
+    owner,
+    name
+  })
   return (
-    <Box width={280} height={8} my={4}>
-      <Placeholder size='full' sx={{ borderRadius: 3 }} />
+    <Box my={4}>
+      <RepoOwner owner={data.repository.owner} />
+      <Text as='h1' my={2}>{data.repository.name}</Text>
     </Box>
   )
 }
@@ -75,40 +84,11 @@ export const HomePage = () => {
 export const Home = () => {
   return (
     <View isPadded>
-      <Suspense fallback={<Glimmer />}>
+      <Suspense fallback={<Glimmer text='Home' />}>
         <HomePage />
+        <DisplayRepo owner='facebook' name='react' />
+        <DisplayRepo owner='mattstyles' name='raid' />
       </Suspense>
     </View>
   )
-
-  // if (err) {
-  //   return (
-  //     <View isPadded>
-  //       <List styleType='none'>
-  //         {err.map((msg, i) => {
-  //           return (
-  //             <ListItem key={`err${i}`}>
-  //               <Pre>{msg}</Pre>
-  //             </ListItem>
-  //           )
-  //         })}
-  //       </List>
-  //     </View>
-  //   )
-  // }
-  //
-  // if (!repo) {
-  //   return (
-  //     <Placeholder />
-  //   )
-  // }
-  //
-  // return (
-  //   <View isPadded>
-  //     <Box my={4}>
-  //       <Badge variant='primary'>{repo.owner}</Badge>
-  //       <Text as='h1' my={2}>{repo.name}</Text>
-  //     </Box>
-  //   </View>
-  // )
 }

@@ -11,8 +11,8 @@
     "build": "NODE_PATH=src NODE_ENV=production parcel build src/index.html",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
-    "relay": "yarn run relay-compiler --schema schema.graphql --src ./src/ --watchman false $@",
-    "start": "NODE_PATH=src DEBUG=true yarn run relay && parcel src/index.html"
+    "relay": "yarn run relay-compiler --schema schema.graphql --src ./src/ --watch",
+    "start": "NODE_PATH=src DEBUG=true parcel src/index.html"
   },
   "browserslist": [
     "last 1 Chrome version"
@@ -81,6 +81,7 @@
     "standard": "^14.3.3"
   },
   "dependencies": {
+    "@raid-ui/icons": "^0.19.0-alpha.6",
     "@raid/kit": "^0.19.0-alpha.7",
     "@styled-system/css": "5.1.5",
     "@styled-system/theme-get": "5.1.2",

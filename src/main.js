@@ -1,13 +1,15 @@
 import { render } from 'react-dom'
 
 import { App } from 'components/app'
-import { Home } from 'views/home'
+import { Home } from 'components/home'
+import { Stable } from 'components/stable'
 
 const el = document.querySelector('.js-main')
 
 render(
   <App>
     <Home />
+    <Stable />
   </App>,
   el
 )

@@ -1,12 +1,13 @@
 
 import React, { Suspense } from 'react'
 import { ThemeProvider } from 'styled-components'
-import { Reset, extend, Placeholder, Box } from '@raid/kit'
+import { Reset, extend } from '@raid/kit'
 import {
   RelayEnvironmentProvider
 } from 'react-relay/hooks'
 
 import { env } from '../env'
+import { Glimmer } from 'components/glimmer'
 
 const theme = extend()({
   colors: {
@@ -14,20 +15,11 @@ const theme = extend()({
   }
 })
 
-const Suspending = () => {
-  return (
-    <Box width={280} height={8} m={4}>
-      <Placeholder size='full' sx={{ borderRadius: 'rounded' }} />
-    </Box>
-  )
-}
-
 export const App = ({ state, children }) => (
   <ThemeProvider theme={theme}>
     <Reset />
     <RelayEnvironmentProvider environment={env}>
-      <Placeholder size='full' />
-      <Suspense fallback={<Suspending />}>
+      <Suspense fallback={<Glimmer text='App' />}>
         {children}
       </Suspense>
     </RelayEnvironmentProvider>
