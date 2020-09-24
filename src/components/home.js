@@ -1,5 +1,5 @@
 
-import React, { Suspense } from 'react'
+import React, { Suspense, useState, useEffect } from 'react'
 import {
   View, Box, Flex, Spacer,
   Text, Badge,
@@ -15,6 +15,11 @@ import {
 
 import { env } from '../env'
 import { Glimmer } from 'components/glimmer'
+import { ErrorBoundary } from 'components/error'
+
+/**
+ * Uses hooks to access data
+ */
 
 const ownerFragment = graphql`
   fragment homeOwner on RepositoryOwner {
@@ -82,12 +87,39 @@ export const HomePage = () => {
 }
 
 export const Home = () => {
+  const [veryLazy, setVeryLazy] = useState(false)
+  useEffect(() => {
+    setTimeout(() => {
+      setVeryLazy(true)
+    }, 2000)
+  }, [])
   return (
     <View isPadded>
       <Suspense fallback={<Glimmer text='Home' />}>
         <HomePage />
-        <DisplayRepo owner='facebook' name='react' />
-        <DisplayRepo owner='mattstyles' name='raid' />
+        <Suspense fallback={<Glimmer text='Lazy' />}>
+          <DisplayRepo owner='facebook' name='react' />
+          <DisplayRepo owner='mattstyles' name='raid' />
+          <DisplayRepo owner='mattstyles' name='react-basic-kit' />
+          <ErrorBoundary>
+            <DisplayRepo owner='mattstyles' name='react-basic-kits' />
+          </ErrorBoundary>
+          <ErrorBoundary>
+            <DisplayRepo owner='mattstyles' name='match' />
+            {veryLazy ? (
+              <Suspense fallback={<Glimmer text='Very lazy indeed' />}>
+                <DisplayRepo owner='mattstyles' name='react-basic-kitXXX' />
+              </Suspense>
+            ) : <Text>Very lazily loading an error</Text>}
+            {veryLazy ? (
+              <Suspense fallback={<Glimmer text='Also Very lazy indeed' />}>
+                <ErrorBoundary>
+                  <DisplayRepo owner='mattstyles' name='react-basic-kits' />
+                </ErrorBoundary>
+              </Suspense>
+            ) : <Text>Very lazily loading a preloaded error</Text>}
+          </ErrorBoundary>
+        </Suspense>
       </Suspense>
     </View>
   )
