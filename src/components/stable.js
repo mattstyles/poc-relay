@@ -62,7 +62,7 @@ export const Stable = ({
   name
 }) => {
   return (
-    <View isPadded mt={8}>
+    <View isPadded isFlex sx={{ flex: 0.5 }} mt={8}>
       <Text>Stable component</Text>
       <QueryRenderer
         environment={env}

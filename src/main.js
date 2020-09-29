@@ -1,15 +1,21 @@
+
 import { render } from 'react-dom'
+import { Flex } from '@raid/kit'
 
 import { App } from 'components/app'
 import { Home } from 'components/home'
 import { Stable } from 'components/stable'
+import { Lazy } from 'components/lazy'
 
 const el = document.querySelector('.js-main')
 
 render(
   <App>
-    <Home />
-    <Stable />
+    <Flex row>
+      <Home />
+      <Lazy />
+      <Stable />
+    </Flex>
   </App>,
   el
 )

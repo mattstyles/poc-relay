@@ -68,7 +68,7 @@ const DisplayRepo = ({
     name
   })
   return (
-    <Box my={4}>
+    <Box my={2}>
       <RepoOwner owner={data.repository.owner} />
       <Text as='h1' my={2}>{data.repository.name}</Text>
     </Box>
@@ -79,7 +79,7 @@ export const HomePage = () => {
   const data = usePreloadedQuery(query, preloadedQuery)
 
   return (
-    <Box my={4}>
+    <Box my={2}>
       <RepoOwner owner={data.repository.owner} />
       <Text as='h1' my={2}>{data.repository.name}</Text>
     </Box>
@@ -94,13 +94,13 @@ export const Home = () => {
     }, 2000)
   }, [])
   return (
-    <View isPadded>
+    <View isPadded isFlex>
       <Suspense fallback={<Glimmer text='Home' />}>
         <HomePage />
         <Suspense fallback={<Glimmer text='Lazy' />}>
-          <DisplayRepo owner='facebook' name='react' />
           <DisplayRepo owner='mattstyles' name='raid' />
-          <DisplayRepo owner='mattstyles' name='react-basic-kit' />
+          <DisplayRepo owner='sveltejs' name='svelte' />
+          <DisplayRepo owner='substack' name='tape' />
           <ErrorBoundary>
             <DisplayRepo owner='mattstyles' name='react-basic-kits' />
           </ErrorBoundary>
